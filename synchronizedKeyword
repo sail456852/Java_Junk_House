@@ -1,0 +1,63 @@
+package test;
+
+public class Banker {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Cus yuzhen = new Cus(5, "yuzhen"); // deposit 5
+		Cus yuming = new Cus(1, "yuming"); // deposit 1
+
+		Thread t1 = new Thread(yuzhen);
+		Thread t2 = new Thread(yuming);
+
+		t1.start();
+		t2.start();
+	}
+
+}
+
+class Bank {
+//Bank.class
+//new Student*().getClass()
+	//Student.class
+	private  static int sum;  //share the int object between two threads objects. 
+
+	//Object obj = new Object();
+
+	public synchronized void add(int money, String name) { //synchronized everything inside this function
+
+		// synchronized(obj){  //obj can be :  1. Object obj. 2. this (which points to current object  3. CurrentClassName.class. (which means compiled executing code) .
+			
+			sum = sum + money;
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			System.out.println(name + " deposited  " + money + " $");
+			System.out.println("Now the bank's sum ==" + sum);
+		//}  //synchronized means each thread can only access the block of code that enclosed by the keyword synchronized. at a time .1 thread per time in sequence. d
+	}
+	
+	
+
+}
+
+class Cus implements Runnable {
+	private Bank b = new Bank();
+	private int money;
+	private String name;
+
+	// Constructor
+	Cus(int money, String name) {
+		this.money = money;
+		this.name = name;
+	}
+
+	public void run() {
+		for (int i = 0; i < 100; i++) {//2 500  4
+			b.add(money, name);
+		}
+	}
+	
+}
