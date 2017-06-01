@@ -1,0 +1,48 @@
+//download shit from the internet 
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+/**
+ * Created by yuzhen on 6/1/2017.
+ */
+public class Download {
+
+    public static void main(String[] args) throws Exception{
+        final String ImageURL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496327450534&di=06b14c441a4d75e5e0fd0d2927c337ce&imgtype=0&src=http%3A%2F%2Fimg01.qulishi.com%2F2016-07%2F04%2F5779ca1a%2F5779ca1a57e1b67c1b9d244a%2F1467620800289_803096.jpg";
+        Download_Extends obj = new Download_Extends();
+        obj.singlePath(ImageURL);
+        System.out.println("finish downloading !");
+    }
+
+
+}
+
+
+class Download_Extends extends Thread {
+
+    @Override
+    public void run() {
+
+
+    }
+
+    public void singlePath(String path) throws Exception {
+        URL url = new URL(path);
+        URLConnection conn = url.openConnection();
+        InputStream is = conn.getInputStream();
+        FileOutputStream fos = new FileOutputStream("C:\\abc\\MyidealGirl.jpg");
+
+        byte[] b = new byte[1024];
+        int len = 0;
+        while ((len = is.read(b)) != -1) {
+            fos.write(b, 0, len);
+        }
+        is.close();
+        fos.close();
+
+    }
+
+}
