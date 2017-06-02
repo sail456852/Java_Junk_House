@@ -1,0 +1,11 @@
+private static void demo3() {
+		String str = "I have a user account sail456852@hotmail.com, and another ,309906615@qq.com";
+		String regex = "([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
+		//String regex =  "(\w+[-|_|\\.]?)+\w@(\w+(-\w+)?\\.)+[a-zA-Z]{2,}"; //this is wrong.
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(str);
+
+		while (m.find()) {
+			System.out.println(m.group());
+		}
+	}
