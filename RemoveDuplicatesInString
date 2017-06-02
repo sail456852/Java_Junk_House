@@ -1,0 +1,6 @@
+// TODO Auto-generated method stub
+		String str = "aaaaaaabbbbbbcccccvvvvvv"; 
+		String regex = "(.)\\1+"; // \\1 means group ID, 
+		String result = str.replaceAll(regex, "$1");  //support regular expression.
+				//$1 means refers to the group 1 in the regular expression.
+		System.out.println(result);
