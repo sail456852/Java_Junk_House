@@ -1,0 +1,7 @@
+// String regex =
+		// "http://img1\\.mm131\\.com/pic/\\d{4,6}/\\d{1,5}\\.jpg";
+
+		// Pattern p = Pattern.compile()
+		String str = "bbb"; // "a" true "ab" false; "abc"
+		String regex = "(b)\\1{2}";  // equals to (b){3}  ;	
+		System.out.println(str.matches(regex));
