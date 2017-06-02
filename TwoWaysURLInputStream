@@ -1,0 +1,8 @@
+//URL connection converted into a inputStream.
+import java.net.URL;
+import java.net.URLConnection;
+import java.io.InputStream;
+		URL url = new URL(path);   	// create URL object.
+		URLConnection conn = url.openConnection(); //method 2  use URLConnection class. import java.net.URL;
+		InputStream is = conn.getInputStream();  //method 2   have to import java.io.inputstream
+		//InputStream is = url.openStream();  //method 1  Only this will work ! 
