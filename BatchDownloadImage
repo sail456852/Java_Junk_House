@@ -1,0 +1,117 @@
+*************************** DownloadUtils class. 
+package com.yuzhen;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Random;
+import java.net.URL;
+import java.net.URLConnection;
+import java.io.InputStream;
+
+public class DownloadUtils {
+
+	public static void downloadImage(String path, String destDir) throws Exception {
+		// generate random stuff here
+		Random r = new Random();
+		int num = r.nextInt(1000);
+		// this is single thread downloading. also.
+
+		// URL connection converted into a inputStream.
+
+		URL url = new URL(path); // create URL object.
+		URLConnection conn = url.openConnection(); // method 2 use URLConnection
+													// class. import
+													// java.net.URL;
+		InputStream is = conn.getInputStream(); // method 2 have to import
+												// java.io.inputstream
+		// InputStream is = url.openStream(); //method 1 Only this will work !
+
+		// Create folder. file, and outputStream
+		int index = path.lastIndexOf("/"); // locating the last / back slash in
+											// the this string. get the index.
+		String name = path.substring(index + 1); // 1.jpg //cut the from index +
+													// 1 to the end. not include
+													// /
+		File dest = new File(destDir); // encapsulate a path into a file object.
+		// check the folder exists or not . if not exists .create one
+		if (!dest.exists()) {
+			dest.mkdirs();
+		}
+		File destFile = new File(dest, num + name); // encapsulate a file with
+													// absolutely file path into
+													// a file object.
+		// create file outputstream
+		FileOutputStream fos = new FileOutputStream(destFile);
+
+		// IO stuff
+		byte[] arr = new byte[1024]; // use byte arrays write Input and
+										// OutputStream.
+		int len;
+		while ((len = is.read(arr)) != -1) { // read( takes a parameters! )
+			fos.write(arr, 0, len);
+		}
+		fos.close();
+		is.close();
+	}
+
+	/**
+	 * revolve html into string. //this path takes a web page link like
+	 * www.baidu.com
+	 */
+	public static String parseHtml(String path) throws Exception {
+//URL part 
+		URL url = new URL(path);
+		InputStream is = url.openStream();
+//IO part
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		byte[] arr = new byte[1024];
+		int len;
+		while ((len = is.read(arr)) != -1) { // forget add arr argument will
+												// cause errors !
+			bos.write(arr, 0, len);
+		}
+//Close stream
+		is.close();
+		bos.close();
+//Convert to String and return 
+		String source = bos.toString();  //if you need s
+		return source;
+	}
+*****************************************************************************************************************************************
+//class calling the static functions;
+package com.yuzhen;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Test {
+
+	public static void main(String[] args) throws Exception {
+
+		String savePath = "C:\\abc";
+
+		// Download multiple images on a website using parsehtml function
+
+		String webLink = "http://www.7kk.com/album/photos/68563.html";
+
+		String webSource = DownloadUtils.parseHtml(webLink);
+		// matching the regular expression
+		//String regex = "http://img1\\.mm131\\.com/pic/\\d{4,6}/\\d{1,5}\\.jpg";  //It's sensei's  
+		String regex = "http://pic\\.7kk\\.com/.*\\.jpg"; 
+
+		// using Pattern to extract data ;
+		Pattern p = Pattern.compile(regex); // compile regular expression into											// an pattern object.
+		Matcher m = p.matcher(webSource); // get matcher object. 
+
+		while (m.find()) {
+			String imgLink = m.group();
+			System.out.println(imgLink);
+			DownloadUtils.downloadImage(imgLink, savePath);
+		}
+
+	}
+
+}
+
+
