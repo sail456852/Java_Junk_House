@@ -1,0 +1,27 @@
+private static void demo1() {
+		String str = "abcabc"; // "a" true "ab" false; "abc"
+
+		String regex = "[abc]";
+
+		String regex2 = "\\w"; // means [A-Za-z0-9]
+		String regex3 = "\\w{2}"; // means [A-Za-z0-9] {one character! belongs to this range shows twice!tested!
+		String regex4 = "\\w+"; // means more than 1 or equals 1 times
+		String regex5 = "\\w?"; // means 1 times or 0 times.
+		String regex6 = "(abc){2}";// means abc show up 2 times .exactly.
+		String regex7 = "(aaa((bb)cccc)ddd)"; // grouping. how many left
+			//regex7 means you have to meet the regex exactly// parenthesis means
+		// how many groups it is.
+		// [] : represents one character
+		// [a-z] : represents characters in this range shows up only once
+		// ?: shows 1 time or 0 times
+		// * : shows up 0 times or more
+		// \w : represents [A-Za-z0-9]
+		// \W : represents [^A-Za-z0-9]
+		// \d : represents [0-9]
+		// \D : represents non -numbers
+		// {n}: represents the left side contents shows up n times
+		// {n,}: represents the left side contents shows up n or more times;
+		// {n,m}: represents the left side contents shows up n to m times;
+
+		System.out.println(str.matches(regex6));
+	}
